@@ -1,4 +1,51 @@
-import R from "./ramda.js";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>main.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Catan.html">Catan</a><ul class='methods'><li data-type='method'><a href="Catan.html#.axialToPixel">axialToPixel</a></li><li data-type='method'><a href="Catan.html#.createInteractiveElements">createInteractiveElements</a></li><li data-type='method'><a href="Catan.html#.defineHexagonClipPath">defineHexagonClipPath</a></li><li data-type='method'><a href="Catan.html#.generateTiles">generateTiles</a></li><li data-type='method'><a href="Catan.html#.getHexagonVerticesSVG">getHexagonVerticesSVG</a></li><li data-type='method'><a href="Catan.html#.initGame">initGame</a></li><li data-type='method'><a href="Catan.html#.renderBoard">renderBoard</a></li><li data-type='method'><a href="Catan.html#.setAttributes">setAttributes</a></li><li data-type='method'><a href="Catan.html#.shuffleTiles">shuffleTiles</a></li></ul></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">main.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import R from "./ramda.js";
 /**
  * Catan.js is a module to model and play "The Settlers of Catan".
  * @namespace Catan
@@ -70,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * @memberof Catan
      * @function setAttributes
      * @param {Element} el - The DOM element (HTML or SVG) on which to set attributes.
-     * @param {Object.<string, (string|number|boolean)>} attrs - An object where keys are attribute names
+     * @param {Object.&lt;string, (string|number|boolean)>} attrs - An object where keys are attribute names
      * (e.g., 'class', 'stroke-width', 'cx') and values are the attribute values.
      * @returns {void} This function does not return a value; it modifies the `el` directly.
      */
@@ -82,8 +129,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Creates and defines a reusable SVG <clipPath> element with a hexagonal shape.
-     * This clip path is stored in the SVG's <defs> section and is identified by `id="hexagon-clip"`.
+     * Creates and defines a reusable SVG &lt;clipPath> element with a hexagonal shape.
+     * This clip path is stored in the SVG's &lt;defs> section and is identified by `id="hexagon-clip"`.
      * It is used to clip the rectangular tile images into a hexagonal form, matching the
      * visual size of the tiles to create spacing. The function ensures that this clip path
      * is defined only once, even if called multiple times.
@@ -91,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * @memberof Catan
      * @function defineHexagonClipPath
      * @returns {void} This function does not return a value; it modifies the SVG DOM by adding
-     * to the `<defs>` section.
+     * to the `&lt;defs>` section.
      */
     
     function defineHexagonClipPath() {
@@ -115,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const points = [];
         const visualRadius = config.HEX_SIZE - config.HEX_VISUAL_OFFSET;
         
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i &lt; 6; i++) {
             const angle = Math.PI / 180 * (60 * i - 30); // Pointy-top hex
             points.push(
                 `${(visualRadius * Math.cos(angle)).toFixed(3)},${(visualRadius * Math.sin(angle)).toFixed(3)}`
@@ -150,16 +197,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * Renders the entire Catan board by drawing all shuffled game tiles as SVG elements.
-     * Each tile is constructed as an SVG group (<g>) containing a visible hexagonal polygon
+     * Each tile is constructed as an SVG group (&lt;g>) containing a visible hexagonal polygon
      * (for the outline and fallback color) and a clipped hexagonal image. The function also
      * calculates the necessary offsets to ensure the entire board is centered within the
      * SVG's defined viewBox. This is the primary visual rendering function for the game tiles.
      * @memberof Catan
      * @function renderBoard
-     * @param {Array<Object>} shuffledTiles - An array of tile data objects. Each object should
+     * @param {Array&lt;Object>} shuffledTiles - An array of tile data objects. Each object should
      * contain properties like `name`, `image` (filename), and `color` (fallback). This array
      * should already be in the desired randomized order for board placement.
-     * @returns {Array<Object>} An array named `hexagonsData`. Each element in this array is an
+     * @returns {Array&lt;Object>} An array named `hexagonsData`. Each element in this array is an
      * object containing detailed information about each rendered hexagon tile, including the
      * original tile data, its axial coordinates, its final SVG center position (`pixelCenter`),
      * and a reference to its main SVG group element (`element`). This data is crucial for
@@ -168,8 +215,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function renderBoard(shuffledTiles) {
         console.log("renderBoard() called with", shuffledTiles.length, "tiles.");
-        // Clear existing board elements except for <defs>
-        while (config.svgBoardElement.lastChild && config.svgBoardElement.lastChild.tagName !== 'defs') {
+        // Clear existing board elements except for &lt;defs>
+        while (config.svgBoardElement.lastChild &amp;&amp; config.svgBoardElement.lastChild.tagName !== 'defs') {
             config.svgBoardElement.removeChild(config.svgBoardElement.lastChild);
         }
         defineHexagonClipPath(); // Ensure clip path is defined
@@ -207,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const visualRadius = config.HEX_SIZE - config.HEX_VISUAL_OFFSET;
             const hexagonPolygon = document.createElementNS(SVG_NS, 'polygon');
             const polygonPoints = [];
-            for (let i = 0; i < 6; i++) {
+            for (let i = 0; i &lt; 6; i++) {
                 const angle = Math.PI / 180 * (60 * i - 30);
                 polygonPoints.push(
                     `${(visualRadius * Math.cos(angle)).toFixed(3)},${(visualRadius * Math.sin(angle)).toFixed(3)}`
@@ -257,14 +304,14 @@ document.addEventListener('DOMContentLoaded', () => {
      * @function getHexagonVerticesSVG
      * @param {{x: number, y: number}} svgCenterPos - An object representing the final, centered
      * SVG coordinates `{x, y}` of the hexagon's group element.
-     * @returns {Array<{x: number, y: number}>} An array of 6 objects. Each object represents
+     * @returns {Array&lt;{x: number, y: number}>} An array of 6 objects. Each object represents
      * a vertex and contains its `{x, y}` coordinates in the SVG's coordinate system.
      */
     
     function getHexagonVerticesSVG(svgCenterPos) {
         // Calculates vertices based on the TRUE HEX_SIZE for accurate interactive points
         const vertices = [];
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i &lt; 6; i++) {
             const angle = Math.PI / 180 * (60 * i - 30);
             const x = svgCenterPos.x + config.HEX_SIZE * Math.cos(angle);
             const y = svgCenterPos.y + config.HEX_SIZE * Math.sin(angle);
@@ -282,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * (by default invisible) but clickable interaction layer to the board for player actions.
      * @memberof Catan
      * @function createInteractiveElements
-     * @param {Array<Object>} hexagonsData - The array of hexagon data objects returned by
+     * @param {Array&lt;Object>} hexagonsData - The array of hexagon data objects returned by
      * `renderBoard()`. Each object in this array must contain the `pixelCenter` (final SVG center)
      * of a hexagon, which is used to derive vertex and edge locations.
      * @returns {void} This function does not return a value; it modifies the SVG DOM by appending
@@ -349,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * Its role is to prepare the complete "deck" of Catan tiles before they are shuffled.
      * @memberof Catan
      * @function generateTiles
-     * @returns {Array<Object>} An array containing all the individual tile objects
+     * @returns {Array&lt;Object>} An array containing all the individual tile objects
      * (each typically with `name`, `image`, `color`, and `count` properties derived from the config)
      * required for a new game.
      */
@@ -358,7 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let tiles = [];
         for (const typeKey in config.tileTypes) {
             const type = config.tileTypes[typeKey];
-            for (let i = 0; i < type.count; i++) {
+            for (let i = 0; i &lt; type.count; i++) {
                 tiles.push({ ...type });
             }
         }
@@ -373,9 +420,9 @@ document.addEventListener('DOMContentLoaded', () => {
      * ensuring a different board layout each game.
      * @memberof Catan
      * @function shuffleTiles
-     * @param {Array<Object>} tiles - The array of tile objects that needs to be shuffled.
+     * @param {Array&lt;Object>} tiles - The array of tile objects that needs to be shuffled.
      * This is typically the output from the `generateTiles()` function.
-     * @returns {Array<Object>} A new array containing the same tile objects as the input,
+     * @returns {Array&lt;Object>} A new array containing the same tile objects as the input,
      * but arranged in a random order.
      */
     
@@ -407,7 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const shuffledTiles = shuffleTiles(allTiles);
         const hexagonsData = renderBoard(shuffledTiles);
-        if (hexagonsData && hexagonsData.length > 0) {
+        if (hexagonsData &amp;&amp; hexagonsData.length > 0) {
             createInteractiveElements(hexagonsData);
         } else {
             console.error("Board rendering failed or produced no data, skipping interactive elements.");
@@ -415,4 +462,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     console.log("main.js loaded and DOMContentLoaded. Initializing Catan board script...");
     initGame();
-});
+});</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Mon Jun 02 2025 18:51:43 GMT+0100 (British Summer Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+    <link type="text/css" rel="stylesheet" href="custom.css">
+    
+</body>
+</html>
