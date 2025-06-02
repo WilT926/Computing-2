@@ -1,0 +1,66 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #5785d6;
+    font-family: Arial, sans-serif;
+    overflow: hidden; /* Prevents scrollbars if SVG slightly overflows */
+}
+
+.board-container {
+    width: 90vmin; /* Make the container responsive */
+    height: 90vmin;
+    /* border: 1px dashed grey; /* Uncomment to see container boundary */
+}
+
+#catan-board-svg {
+    width: 100%;
+    height: 100%;
+    display: block; /* Good practice for SVG scaling */
+    /* border: 1px solid blue; /* Uncomment to see SVG boundary */
+}
+
+/* Styling for the visual hexagon tile (polygon providing outline and base color) */
+.svg-hexagon-polygon {
+    /* fill is set dynamically in JS based on tile.color as a fallback */
+    stroke: #333; /* Visible border for hexagons */
+    stroke-width: 0.5; /* Adjust based on viewBox units, e.g., 0.5 or 1 */
+}
+
+/* Styling for the tile image (not strictly needed here if attributes are sufficient) */
+.svg-tile-image {
+    /* No specific styles needed here if attributes handle everything */
+}
+
+/* Styling for interactive settlement points (circles) */
+.svg-interactive-point {
+    fill: rgba(0, 0, 255, 0); /* Fully transparent by default */
+    /* stroke: rgba(0, 0, 255, 0.1); /* Optional: very faint border for dev visibility */
+    /* stroke-width: 0.2; */
+    cursor: pointer;
+    transition: fill 0.2s ease; /* Smooth hover effect */
+}
+.svg-interactive-point:hover {
+    fill: rgba(0, 0, 255, 0.4); /* Visible on hover */
+}
+
+/* Styling for interactive road lines */
+.svg-interactive-line {
+    stroke: rgba(255, 0, 0, 0); /* Fully transparent by default */
+    stroke-linecap: round; /* Makes ends of line rounded, can improve click feel */
+    /* stroke-width is set dynamically in JS (config.LINE_THICKNESS) for click area */
+    cursor: pointer;
+    transition: stroke 0.2s ease; /* Smooth hover effect */
+}
+.svg-interactive-line:hover {
+    stroke: rgba(255, 0, 0, 0.4); /* Visible on hover */
+}
+
+/* Optional: Hover effect for the whole hexagon group */
+.hexagon-tile-group:hover .svg-hexagon-polygon {
+    /* Example: Slightly change stroke or fill on hover if desired */
+    /* stroke: #000; */
+    /* opacity: 0.9; */
+}
