@@ -13,6 +13,7 @@ body {
     width: 90vmin; /* Make the container responsive */
     height: 90vmin;
     /* border: 1px dashed grey; /* Uncomment to see container boundary */
+    
 }
 
 #catan-board-svg {
@@ -63,4 +64,30 @@ body {
     /* Example: Slightly change stroke or fill on hover if desired */
     /* stroke: #000; */
     /* opacity: 0.9; */
+}
+
+.number-token-group {
+    pointer-events: none; /* So the token doesn't interfere with clicks on underlying elements if needed */
+}
+
+.number-token-circle {
+    fill: #FDF5E6; /* An off-white like OldLace or parchment */
+    stroke: #4A3B31; /* Dark brown or black for outline */
+    stroke-width: 0.5; /* Adjust as needed */
+}
+
+.number-token-text {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-anchor: middle;      /* Horizontally center */
+    dominant-baseline: middle; /* Vertically center */
+    fill: #000000;            /* Black text by default */
+    paint-order: stroke; /* Make stroke appear behind fill for better legibility */
+    stroke: white; /* Optional: thin white stroke around text for legibility on dark images */
+    stroke-width: 0.25px; /* Adjust if using text stroke */
+    stroke-linejoin: round;
+}
+
+.number-token-text-red {
+    fill: #D00000;            /* Red text for 6 and 8 */
 }
