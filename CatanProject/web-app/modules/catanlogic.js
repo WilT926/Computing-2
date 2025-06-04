@@ -26,7 +26,6 @@ CatanLogic.axialToPixel = function (q, r, hexSize) {
  * @param {Object} tileTypesConfig - The tileTypes section of the configuration.
  * @returns {Array<Object>} Array of tile objects.
  */
-
 CatanLogic.generateTiles = function (tileTypesConfig) {
     let tiles = [];
     for (const typeKey in tileTypesConfig) {
