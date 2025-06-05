@@ -2,6 +2,7 @@
 
 import { SVG_NS } from './catanconfig.js'; // Use importedConfigBase if needed for defaults
 import CatanLogic from './catanlogic.js';
+import gameState from './catanstate.js';
 
 const CatanUI = Object.create(null);
 
@@ -316,16 +317,52 @@ CatanUI.createInteractiveElements = function createInteractiveElements(
             class: 'svg-interactive-point',
         });
         circleEl.addEventListener('click', () => {
-                console.log('Clicked SVG point at:', vertex)
+            console.log('Clicked SVG point at:', vertex);
 
-                if (gameState.gamePhase.startsWith('SetupPlacement1'))
+            // First, check which phase of the game we are in
+            if (gameState.gamePhase.startsWith('SetupPlacement1')) {
+                // Name might be different, e.g., 'SetupPlacement1'
 
+                const isPlacementValid = true; // TODO: Implement distance rule check here
 
+                // If the spot is valid, proceed with placing the settlement
+                if (isPlacementValid) {
+                    // Get the current player *inside* this block
+                    const player = gameState.getCurrentPlayer();
+
+                    // Visually place the settlement
+                    CatanUI.setAttributes(circleEl, {
+                        fill: player.color, // Use the 'player' variable defined just above
+                        stroke: 'black',
+                        'stroke-width': 0.5,
+                        r: currentConfig.POINT_RADIUS * 0.8, // Make it slightly smaller to show border
+                    });
+
+                    // Remove the interactive class so it no longer has hover effects
+                    circleEl.classList.remove('svg-interactive-point');
+
+                    console.log(
+                        `${player.playerName} placed a settlement. Now they need to place a road.`
+                    ); // Used playerName
+
+                    gameState.nextPlayer(); // Move to the next player's turn
+
+                    // This 'else' belongs to 'if (isPlacementValid)'
+                } else {
+                    console.log('Invalid placement!');
+                    // Here you could add a visual cue, like making the circle flash red briefly
+                }
+
+                // This 'else' belongs to 'if (gameState.gamePhase.startsWith(...))'
+            } else {
+                // Handle clicks during a normal player turn (which we'll build later)
+                console.log('Not in setup phase.');
             }
-            
-        );
+        }); // End of addEventListener callback
+
+        // `appendChild` needs to be inside the `forEach` loop to add every circle
         svgBoardEl.appendChild(circleEl);
-    });
+    }); // End of uniqueVertices.forEach
 };
 
 export default CatanUI;

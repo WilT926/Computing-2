@@ -21,14 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // VIEWBOX_HEIGHT: document.getElementById("catan-board-svg").viewBox.baseVal.height || configBase.VIEWBOX_HEIGHT,
     };
 
-    if (!runtimeConfig.svgBoardElement) {
-        console.error(
-            'CRITICAL: Could not find SVG element with ID ',
-            catan - board - svg,
-            '!'
-        );
-        return;
-    }
     console.log(
         'SVG Board Element reference acquired:',
         runtimeConfig.svgBoardElement
@@ -62,52 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
             );
         }
     }
-
-    const gameState = {
-        players: [
-            {
-                id: 1,
-                playerName: 'Player 1',
-                colour: '#ffffff',
-                resources: { lumber: 0, wool: 0, brick: 0, ore: 0, grain: 0 },
-                victoryPoints: 0,
-            },
-            {
-                id: 2,
-                playerName: 'Player 2',
-                colour: '#ffffff',
-                resources: { lumber: 0, wool: 0, brick: 0, ore: 0, grain: 0 },
-                victoryPoints: 0,
-            },
-            {
-                id: 3,
-                playerName: 'Player 3',
-                colour: '#ffffff',
-                resources: { lumber: 0, wool: 0, brick: 0, ore: 0, grain: 0 },
-                victoryPoints: 0,
-            },
-            {
-                id: 4,
-                playerName: 'Player 4',
-                colour: '#ffffff',
-                resources: { lumber: 0, wool: 0, brick: 0, ore: 0, grain: 0 },
-                victoryPoints: 0,
-            },
-        ],
-        currentPlayerIndex: 0,
-        gamePhase: 'SetupPlacement1',
-    };
-
-    function getCurrentPlayer() {
-        return gameState.players[gameState.currentPlayerIndex];
-    }
-
-    function nextPlayer() {
-        gameState.currentPlayerIndex =
-            (gameState.currentPlayerIndex + 1) % gameState.players.length;
-        console.log(`It is now ${getCurrentPlayer().playerName}"s turn.`);
-    }
-
     console.log(
         'main-app.js loaded and DOMContentLoaded. Initializing Catan board...'
     );
