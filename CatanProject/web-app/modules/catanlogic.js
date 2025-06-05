@@ -8,16 +8,16 @@ const CatanLogic = Object.create(null);
  * Converts axial hex grid coordinates to pixel/SVG unit coordinates.
  * @memberof CatanLogic
  * @function axialToPixel
- * @param {number} q - The 'q' axial coordinate.
- * @param {number} r - The 'r' axial coordinate.
+ * @param {number} q - The "q" axial coordinate.
+ * @param {number} r - The "r" axial coordinate.
  * @param {number} hexSize - The true radius of the hexagon.
  * @returns {{x: number, y: number}} Pixel/SVG coordinates.
  */
-CatanLogic.axialToPixel = function (q, r, hexSize) {
-    const x = hexSize * (Math.sqrt(3) * q + Math.sqrt(3) / 2 * r);
-    const y = hexSize * (3 / 2 * r);
+CatanLogic.axialToPixel = function axialToPixel(q, r, hexSize) {
+    const x = hexSize * (Math.sqrt(3) * q + (Math.sqrt(3) / 2) * r);
+    const y = hexSize * ((3 / 2) * r);
     return { x, y };
-}
+};
 
 /**
  * Generates the initial array of tile objects.
@@ -26,16 +26,12 @@ CatanLogic.axialToPixel = function (q, r, hexSize) {
  * @param {Object} tileTypesConfig - The tileTypes section of the configuration.
  * @returns {Array<Object>} Array of tile objects.
  */
-CatanLogic.generateTiles = function (tileTypesConfig) {
-    let tiles = [];
-    for (const typeKey in tileTypesConfig) {
-        const type = tileTypesConfig[typeKey];
-        for (let i = 0; i < type.count; i++) {
-            tiles.push({ ...type });
-        }
-    }
+CatanLogic.generateTiles = function generateTiles(tileTypesConfig) {
+    const tiles = Object.values(tileTypesConfig).flatMap((type) =>
+        Array.from({ length: type.count }, () => ({ ...type }))
+    );
     return tiles;
-}
+};
 
 /**
  * Shuffles an array of tiles.
@@ -44,9 +40,9 @@ CatanLogic.generateTiles = function (tileTypesConfig) {
  * @param {Array<Object>} tiles - Array of tiles to shuffle.
  * @returns {Array<Object>} Shuffled array of tiles.
  */
-CatanLogic.shuffleTiles = function(tiles) {
+CatanLogic.shuffleTiles = function shuffleTiles(tiles) {
     return R.sortBy(() => Math.random(), tiles);
-}
+};
 
 /**
  * Creates an array of points for an irregular polygon.
@@ -59,21 +55,29 @@ CatanLogic.shuffleTiles = function(tiles) {
  * @param {number} irregularity - Irregularity factor.
  * @returns {string} Points string.
  */
-CatanLogic.createIrregularPolygon = function (centerX, centerY, avgRadius, numPoints, irregularity) {
+CatanLogic.createIrregularPolygon = function createIrregularPolygon(
+    centerX,
+    centerY,
+    avgRadius,
+    numPoints,
+    irregularity
+) {
     const points = [];
     const angleStep = (Math.PI * 2) / numPoints;
     for (let i = 0; i < numPoints; i++) {
         const currentAngleBase = angleStep * i;
-        const radiusFluctuation = avgRadius * irregularity * (Math.random() - 0.5) * 2;
+        const radiusFluctuation =
+            avgRadius * irregularity * (Math.random() - 0.5) * 2;
         const radius = avgRadius + radiusFluctuation;
-        const angleFluctuation = angleStep * irregularity * (Math.random() - 0.5);
+        const angleFluctuation =
+            angleStep * irregularity * (Math.random() - 0.5);
         const currentAngle = currentAngleBase + angleFluctuation;
         const x = centerX + radius * Math.cos(currentAngle);
         const y = centerY + radius * Math.sin(currentAngle);
         points.push(`${x.toFixed(3)},${y.toFixed(3)}`);
     }
     return points.join(' ');
-}
+};
 
 /**
  * Calculates SVG coordinates of hexagon vertices.
@@ -83,15 +87,21 @@ CatanLogic.createIrregularPolygon = function (centerX, centerY, avgRadius, numPo
  * @param {number} hexSize - The true radius of the hexagon.
  * @returns {Array<{x: number, y: number}>} Array of vertex coordinates.
  */
-CatanLogic.getHexagonVerticesSVG = function (svgCenterPos, hexSize) {
+CatanLogic.getHexagonVerticesSVG = function getHexagonVerticesSVG(
+    svgCenterPos,
+    hexSize
+) {
     const vertices = [];
     for (let i = 0; i < 6; i++) {
-        const angle = Math.PI / 180 * (60 * i - 30);
+        const angle = (Math.PI / 180) * (60 * i - 30);
         const x = svgCenterPos.x + hexSize * Math.cos(angle);
         const y = svgCenterPos.y + hexSize * Math.sin(angle);
-        vertices.push({ x: parseFloat(x.toFixed(3)), y: parseFloat(y.toFixed(3)) });
+        vertices.push({
+            x: parseFloat(x.toFixed(3)),
+            y: parseFloat(y.toFixed(3)),
+        });
     }
     return vertices;
-}
+};
 
 export default CatanLogic;
